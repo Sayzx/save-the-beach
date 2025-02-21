@@ -1,17 +1,11 @@
-let gameInstance = null;
-let planeInstance = null;
-
 class PlaneAnimation {
     constructor() {
-        this.canvas = document.getElementById('planeCanvas');
+        this.canvas = document.getElementById('gameCanvas'); // Use the game canvas
         this.ctx = this.canvas.getContext('2d');
-        
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = 100;
         
         this.plane = {
             x: -200,
-            y: -70,
+            y: 50, // Adjust the y position to fly over the background
             width: 350,
             height: 200,
             speed: 3,
@@ -21,8 +15,6 @@ class PlaneAnimation {
         
         this.planeImage = new Image();
         this.planeImage.src = 'img/avion.png';
-        
-        this.animate();
     }
     
     update() {
@@ -43,18 +35,10 @@ class PlaneAnimation {
     }
     
     draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        
         if (this.plane.isVisible && this.planeImage.complete) {
             this.ctx.drawImage(this.planeImage, this.plane.x, this.plane.y, 
             this.plane.width, this.plane.height);
         }
-    }
-    
-    animate() {
-        this.update();
-        this.draw();
-        requestAnimationFrame(() => this.animate());
     }
 }
 
@@ -63,12 +47,14 @@ class Game {
         this.canvas = document.getElementById('gameCanvas');
         this.ctx = this.canvas.getContext('2d');
         this.canvas.width = window.innerWidth;
-        this.canvas.height = 400;
+        this.canvas.height = window.innerHeight;
         
         this.score = 0;
         this.timeLeft = 60;
         this.plasticBags = [];
         this.isGameOver = false;
+        
+        this.planeAnimation = new PlaneAnimation(); // Initialize PlaneAnimation
         
         // Chargement de l'image de fond
         this.background = new Image();
@@ -228,12 +214,17 @@ class Game {
             this.ctx.drawImage(this.background, 0, 0, this.canvas.width, this.canvas.height);
         }
         
-        // Dessiner les sacs plastiques
+        // Dessiner les sacs plastiques avec effet glow
         this.plasticBags.forEach(bag => {
             if (bag.image.complete) {
+                drawGlowEffect(bag);
                 this.ctx.drawImage(bag.image, bag.x, bag.y, bag.width, bag.height);
             }
         });
+
+        // Update and draw the plane
+        this.planeAnimation.update();
+        this.planeAnimation.draw();
     }
 
     gameLoop() {
@@ -246,7 +237,6 @@ class Game {
 
 window.onload = () => {
     gameInstance = new Game();
-    planeInstance = new PlaneAnimation();
     
     // Ajouter l'événement pour démarrer le jeu
     document.getElementById('start-button').addEventListener('click', () => {
@@ -344,8 +334,8 @@ Game.prototype.draw = function() {
             this.ctx.drawImage(bag.image, bag.x, bag.y, bag.width, bag.height);
         }
     });
+
+    // Update and draw the plane
+    this.planeAnimation.update();
+    this.planeAnimation.draw();
 };
-
-
-
-

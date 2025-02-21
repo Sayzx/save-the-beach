@@ -6,23 +6,21 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20100%20100'%3E%3Ctext%20y%3D'.9em'%20font-size%3D'90'%3E🚀%3C%2Ftext%3E%3C%2Fsvg%3E">
 
-
 </head>
 <body>
-    <!-- Ajout du menu de démarrage -->
     <div id="start-menu" class="menu-overlay">
         <h1>Nettoyage de Plage</h1>
         <button id="start-button">Jouer avec la musique</button>
     </div>
 
-    <canvas id="planeCanvas"></canvas>
+    
     <div id="game-container">
-        <div id="score">Score: <span id="score-value">0</span></div>
-        <div id="timer">Temps: <span id="timer-value">60</span>s</div>
         <canvas id="gameCanvas"></canvas>
-        <p><strong>Ramassez le plus de déchets possible avant la fin du temps imparti!</strong></p>
+       
     </div>
-
+    <div id="score">Score: <span id="score-value">0</span></div>
+    <div id="timer">Temps: <span id="timer-value">60</span>s</div>
+    <div id="infos">Ramassez le plus de déchets possible avant la fin du temps imparti!</div>
     <div id="game-over" class="hidden">
         <h2>Partie terminée!</h2>
         <p>Votre score: <span id="final-score">0</span></p>
